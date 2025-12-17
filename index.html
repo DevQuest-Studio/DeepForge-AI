@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeepForge AI Login</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="favicon.svg">
+<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js"></script>
+<script src="config.js"></script>
+</head>
+<body>
+<div class="login">
+  <header>
+    <img src="logo.svg" alt="DeepForge AI" class="logo">
+    <h1>DeepForge AI</h1>
+  </header>
+  <main>
+    <button id="googleLoginBtn" aria-label="Login with Google">Login with Google</button>
+  </main>
+</div>
+<script>
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+document.getElementById("googleLoginBtn").addEventListener("click", () => {
+  auth.signInWithPopup(googleProvider)
+    .then(result => {
+      const user = result.user;
+      localStorage.setItem("df_user", JSON.stringify({ uid: user.uid, name: user.displayName }));
+      window.location.href = "dashboard.html";
+    })
+    .catch(err => alert("Login failed: " + err.message));
+});
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
+</script>
+</body>
+</html>
