@@ -19,17 +19,19 @@
 </div>
 
 <script type="module">
-import { auth, googleProvider } from "./config.js";
+import { auth, googleProvider, signInWithPopup } from "./config.js";
 
-document.getElementById("googleLoginBtn").addEventListener("click", () => {
-    auth.signInWithPopup(googleProvider)
-        .then(result => {
-            const user = result.user;
-            localStorage.setItem("df_user", JSON.stringify({ uid: user.uid, name: user.displayName }));
-            window.location.href = "dashboard.html";
-        })
-        .catch(err => alert("Login failed: " + err.message));
+document.getElementById("googleLoginBtn").addEventListener("click", async () => {
+    try {
+        const result = await signInWithPopup(auth, googleProvider);
+        const user = result.user;
+        localStorage.setItem("df_user", JSON.stringify({ uid: user.uid, name: user.displayName }));
+        window.location.href = "dashboard.html";
+    } catch (err) {
+        alert("Login failed: " + err.message);
+    }
 });
+
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js')
