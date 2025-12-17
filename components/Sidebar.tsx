@@ -1,6 +1,9 @@
+import { auth } from "../lib/firestore";
+
 export default function Sidebar({ user }: any) {
   return (
     <div className="w-64 bg-gray-900 p-4 flex flex-col">
+      <img src="/logo.svg" alt="DeepForge AI" className="w-24 mb-4" />
       <h2 className="text-xl font-bold mb-4">DeepForge AI</h2>
       <p className="mb-4">{user?.displayName}</p>
       <button className="mb-2 px-2 py-1 bg-blue-600 rounded">New Vehicle</button>
