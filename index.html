@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="favicon.svg">
-<script src="config.js"></script>
 </head>
 <body>
 <div class="login-container">
@@ -19,23 +18,21 @@
   </div>
 </div>
 
-<script>
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const googleProvider = new firebase.auth.GoogleAuthProvider();
+<script type="module">
+import { auth, googleProvider } from "./config.js";
 
 document.getElementById("googleLoginBtn").addEventListener("click", () => {
-  auth.signInWithPopup(googleProvider)
-    .then(result => {
-      const user = result.user;
-      localStorage.setItem("df_user", JSON.stringify({ uid: user.uid, name: user.displayName }));
-      window.location.href = "dashboard.html";
-    })
-    .catch(err => alert("Login failed: " + err.message));
+    auth.signInWithPopup(googleProvider)
+        .then(result => {
+            const user = result.user;
+            localStorage.setItem("df_user", JSON.stringify({ uid: user.uid, name: user.displayName }));
+            window.location.href = "dashboard.html";
+        })
+        .catch(err => alert("Login failed: " + err.message));
 });
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js");
+    navigator.serviceWorker.register("sw.js");
 }
 </script>
 </body>
