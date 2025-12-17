@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeepForge AI Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="favicon.svg">
+<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js"></script>
+<script src="config.js"></script>
+</head>
+<body>
+<div id="app">
+  <header>
+    <img src="logo.svg" class="logo" alt="DeepForge AI">
+    <h1>DeepForge AI</h1>
+    <div id="userSection">
+      <span id="userName"></span>
+      <button id="logoutBtn">Logout</button>
+    </div>
+  </header>
+  <div class="main">
+    <aside class="sidebar">
+      <button class="newProjectBtn" data-task="vehicle"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="white" d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zm0-8h14V7H7v2z"/></svg> Vehicle</button>
+      <button class="newProjectBtn" data-task="microcontroller"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="white" d="M12 2l1.5 4.5h4.5l-3.75 3 1.5 4.5L12 11l-3.75 3 1.5-4.5L6 6.5h4.5L12 2z"/></svg> Microcontroller</button>
+      <button class="newProjectBtn" data-task="lua"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="white" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/></svg> Lua Touchscreen</button>
+      <hr>
+      <h3>Projects</h3>
+      <ul id="projectList"></ul>
+    </aside>
+    <section class="content">
+      <div class="controls">
+        <textarea id="prompt" placeholder="Enter your prompt here..." aria-label="AI prompt input"></textarea>
+        <input type="file" id="templateFile" accept=".xml,.lua" aria-label="Template file">
+        <button id="generateBtn">Generate</button>
+      </div>
+      <div class="output-panel">
+        <pre id="aiOutput"></pre>
+      </div>
+    </section>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
