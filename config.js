@@ -1,6 +1,9 @@
 // =======================
 // Firebase Configuration
 // =======================
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAED0FvAfWyLQNaapLNqc4CN9BQPBeq8vU",
   authDomain: "kristoauth-1d71b.firebaseapp.com",
