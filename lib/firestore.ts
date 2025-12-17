@@ -1,6 +1,6 @@
-import { getFirestore, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, addDoc } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_KEY,
@@ -55,4 +55,18 @@ export async function useTickets(uid: string, cost: number) {
   });
 
   return true;
+}
+
+export async function createProject(uid: string, name: string, type: string) {
+  const projectsRef = collection(db, "projects");
+  const docRef = await addDoc(projectsRef, {
+    ownerId: uid,
+    name,
+    type,
+    files: [],
+    versions: [],
+    memory: {},
+    createdAt: new Date().toISOString(),
+  });
+  return docRef.id;
 }
