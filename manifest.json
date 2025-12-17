@@ -1,0 +1,13 @@
+{
+  "name": "DeepForge AI",
+  "short_name": "DeepForge",
+  "description": "AI WebApp for Stormworks vehicles, Lua, and microcontrollers.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#1F2937",
+  "theme_color": "#2563EB",
+  "icons": [
+    { "src": "favicon.svg", "sizes": "64x64", "type": "image/svg+xml" },
+    { "src": "logo.svg", "sizes": "128x128", "type": "image/svg+xml" }
+  ]
+}
