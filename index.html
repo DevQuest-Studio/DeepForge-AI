@@ -7,20 +7,18 @@
 <link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="favicon.svg">
-<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js"></script>
 <script src="config.js"></script>
 </head>
 <body>
-<div class="login">
-  <header>
-    <img src="logo.svg" alt="DeepForge AI" class="logo">
+<div class="login-container">
+  <div class="login-card">
+    <img src="logo.svg" alt="DeepForge AI Logo" class="logo">
     <h1>DeepForge AI</h1>
-  </header>
-  <main>
+    <p>Login with Google to start generating vehicles, microcontrollers, and Lua scripts!</p>
     <button id="googleLoginBtn" aria-label="Login with Google">Login with Google</button>
-  </main>
+  </div>
 </div>
+
 <script>
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
