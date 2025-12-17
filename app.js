@@ -1,9 +1,5 @@
-// =======================
-// Firebase Init
-// =======================
-const app = firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
+// app.js
+import { auth, googleProvider, db, GEMINI_API_KEY, GEMINI_MODELS } from "./config.js";
 
 // =======================
 // DOM Elements
@@ -22,7 +18,7 @@ const aiOutput = document.getElementById("aiOutput");
 let currentUser = null;
 let projects = [];
 let templateContent = "";
-let tickets = 50; // monthly default
+let tickets = 50; 
 let dailyLimit = 5;
 
 // =======================
@@ -31,16 +27,14 @@ let dailyLimit = 5;
 auth.onAuthStateChanged(async (user) => {
     if (!user) return window.location.href = "index.html";
     currentUser = user;
-    userNameEl.textContent = user.displayName;
+    if (userNameEl) userNameEl.textContent = user.displayName;
 
-    // Load user tickets
     const doc = await db.collection("users").doc(user.uid).get();
     if (doc.exists) {
         const data = doc.data();
         tickets = data.tickets ?? 50;
         dailyLimit = data.dailyLimit ?? 5;
     } else {
-        // initialize new user
         await db.collection("users").doc(user.uid).set({
             tickets: tickets,
             dailyLimit: dailyLimit,
@@ -52,18 +46,20 @@ auth.onAuthStateChanged(async (user) => {
 });
 
 // Logout
-logoutBtn.addEventListener("click", () => auth.signOut().then(() => window.location.href="index.html"));
+if (logoutBtn) logoutBtn.addEventListener("click", () => auth.signOut().then(() => window.location.href="index.html"));
 
 // =======================
 // Template Upload
 // =======================
-templateFile.addEventListener("change", (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => { templateContent = reader.result; };
-    reader.readAsText(file);
-});
+if (templateFile) {
+    templateFile.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => { templateContent = reader.result; };
+        reader.readAsText(file);
+    });
+}
 
 // =======================
 // Projects Management
@@ -85,8 +81,9 @@ async function loadProjects() {
 }
 
 function renderProjects() {
+    if (!projectList) return;
     projectList.innerHTML = "";
-    projects.forEach((p, i) => {
+    projects.forEach((p) => {
         const li = document.createElement("li");
         li.textContent = p.name;
         li.setAttribute("tabindex", "0");
@@ -97,7 +94,9 @@ function renderProjects() {
 }
 
 function loadProject(project) {
-    promptInput.value = project.history.length ? project.history[project.history.length - 1].prompt : "";
+    if (promptInput) {
+        promptInput.value = project.history.length ? project.history[project.history.length - 1].prompt : "";
+    }
 }
 
 // =======================
@@ -109,7 +108,6 @@ async function checkTickets() {
     if (!doc.exists) return false;
     const data = doc.data();
 
-    // Reset daily ticket usage if date changed
     const lastReset = new Date(data.lastReset);
     const now = new Date();
     if (lastReset.toDateString() !== now.toDateString()) {
@@ -182,9 +180,11 @@ async function callGemini(prompt, task, template) {
 // =======================
 // Generate Button
 // =======================
-generateBtn.addEventListener("click", () => {
-    const prompt = promptInput.value.trim();
-    if (!prompt) return;
-    const task = projects.length ? projects[projects.length - 1].task : "vehicle";
-    callGemini(prompt, task, templateContent);
-});
+if (generateBtn) {
+    generateBtn.addEventListener("click", () => {
+        const prompt = promptInput.value.trim();
+        if (!prompt) return;
+        const task = projects.length ? projects[projects.length - 1].task : "vehicle";
+        callGemini(prompt, task, templateContent);
+    });
+}
