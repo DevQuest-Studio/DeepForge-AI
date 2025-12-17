@@ -1,0 +1,27 @@
+html, body, #__next {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  height: 100%;
+  width: 100%;
+  background-color: #1F2937;
+  color: white;
+}
+
+textarea, input, select, button {
+  font-family: 'Inter', sans-serif;
+}
+
+button {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
