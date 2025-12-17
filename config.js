@@ -1,8 +1,9 @@
 // =======================
 // Firebase Configuration
 // =======================
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAED0FvAfWyLQNaapLNqc4CN9BQPBeq8vU",
@@ -25,9 +26,16 @@ const GEMINI_MODELS = {
     secondary: "Gemini-2.5-flash"    // Fallback model if primary fails
 };
 
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const googleProvider = new GoogleAuthProvider();
+
 // =======================
 // Optional settings
 // =======================
 const MAX_OUTPUT_TOKENS = 10; // Max tokens for AI output
 const DAILY_TICKET_LIMIT = 100;   // Max AI generations per day per user
 const MONTHLY_TICKETS = 3000;     // Monthly ticket allocation
+export { auth, googleProvider, db, GEMINI_API_KEY, GEMINI_MODELS };
